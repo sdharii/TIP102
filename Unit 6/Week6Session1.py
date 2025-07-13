@@ -148,5 +148,100 @@ events = Node("Potion Brewing",
                 Node("Wand Making", 
                     Node("Dragon Taming", 
                         Node("Broomstick Flying")))))
+# print_linked_list(reverse(events))
 
-print_linked_list(reverse(events))
+def is_mirrored(head):
+    """
+    U:
+        I: the (head) of a linked list
+        O: bool -> returns True if values are the same backwards & forwards, otherwise False
+        C: n/a
+        E: empty linked list -> return None ; only head exists -> return head
+    P
+        handle edge cases
+        use a two pointer method -- slow and fast 
+        initialize a previous variable
+        initialize a middle node
+        find the middle node, reverse the second half of the linked list
+            change its .next to the previous node
+        
+    """
+    if not head:
+        return None
+    if not head.next:
+        return True
+    
+    slow = head
+    fast = head
+    previous = None
+
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+    middleNode = slow
+    # print(middleNode.value) -- Checking if the middle is correct!
+
+    current = middleNode
+    while current:
+        next = current.next
+        current.next = previous
+        previous = current
+        current = next
+    
+    first_half = head
+    second_half = previous
+
+    while second_half:
+        if first_half.value != second_half.value:
+            return False
+        first_half = first_half.next
+        second_half = second_half.next
+    return True
+   
+list1 = Node("Phoenix", Node("Dragon", Node("Phoenix")))
+list2 = Node("Werewolf", Node("Vampire", Node("Griffin")))
+
+# print(is_mirrored(list1))
+# print(is_mirrored(list2))
+
+def loop_start(path_start):
+    """
+    U:
+        I: the head of a linked list (path_start)
+        O: returns the value of the node where the cycle starts, otherwise return None
+        C: n/a
+        E: empty linked list -> return None
+
+    P
+        handle edge cases
+        initialize a current variable 
+        initialize a set to keep track of nodes seen
+            if a node hasnt been seen, add it to the set
+                increment current to the next node
+            otherwise if a node HAS been seen, indicating its a cycle
+                return node's value
+        return None if there's no cycle
+    """
+    if not path_start:
+        return None
+    
+    current = path_start
+    seen = set()
+
+    while current:
+        if current not in seen:
+            seen.add(current)
+            current = current.next
+        else:
+            return current.value
+    return None
+path_start = Node("Mystic Falls")
+waypoint1 = Node("Troll's Bridge")
+waypoint2 = Node("Elven Arbor")
+waypoint3 = Node("Fairy Glade")
+
+path_start.next = waypoint1
+waypoint1.next = waypoint2
+waypoint2.next = waypoint3
+waypoint3.next = waypoint1
+print(loop_start(path_start))
