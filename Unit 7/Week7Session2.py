@@ -1,114 +1,91 @@
-def find_cruise_length(cruise_lengths, vacation_length):
-    """
-    U:
-        I: int (vacation_length), list of ints (cruise_lengths)
-        O: bool -> true if cruise length matches vacation_length, otherwise false
-        C: n/a
-        E: empty list -> false
-    P:
-        1. init a left and right pointer
-        2. do a binary search
-            if mid is == vacation_length, return mid
-            if mid is < vacation length
-                left = mid + 1
-            if mid is > vacation length
-                right = mid - 1
-        return false
-    """
+# Standard Problems
+
+def find_perfect_song(playlist, length):
     left = 0
-    right = len(cruise_lengths) - 1
-
-    while left <= right:
-        mid = (left + right ) // 2
-
-        if cruise_lengths[mid] == vacation_length:
-            return True
-        
-        elif cruise_lengths[mid] < vacation_length:
-            left = mid + 1
-        else:
-            right = mid - 1
-    return False
-# print(find_cruise_length([9, 10, 11, 12, 13, 14, 15], 13))
-
-# print(find_cruise_length([8, 9, 12, 13, 13, 14, 15], 11))
-
-def binary_search(cabins, preferred_deck, left, right):
-    if left > right:
-        return left
-    
-    mid = (left + right) // 2
-
-    if cabins[mid] == preferred_deck:
-        return mid
-    
-    if cabins[mid] > preferred_deck:
-        return binary_search(cabins, preferred_deck, left, mid-1) 
-    if cabins[mid] < preferred_deck:
-        return binary_search(cabins, preferred_deck, mid + 1, right)
-
-def find_cabin_index(cabins, preferred_deck):
-    """
-    U:
-        I: list of ints (cabins), int (preferred_deck)
-        O: the index of preferred_deck, otherwise return the index where it would be
-        C: must use recursion, must have O(log n)
-        E: empty list -> return 0
-    P:
-        init left and right
-        find mid point
-        create base cases: 
-            if mid == preferred_deck, return mid
-        
-    """
-    left = 0
-    right = len(cabins) - 1
-    return binary_search(cabins, preferred_deck, left, right)
-
-   
-
-    
-# print(find_cabin_index([1, 3, 5, 6], 5))
-# print(find_cabin_index([1, 3, 5, 6], 2))
-# print(find_cabin_index([1, 3, 5, 6], 7))
-
-def count_checked_in_passengers(rooms):
-    """
-    U:
-        I: list of ints (rooms) -> 1, checked in; 0, not checked in
-        O: returns the total of number of checked in passengers
-        C: must be O(log n) time
-        E:
-    P:
-        init left and right pointers
-        init mid
-        If rooms[mid -1] = 0 and rooms[mid] = 1
-            return len(rooms[mid:])
-        Else left = mid + 1 for rooms[mid] = 0
-        Else right = mid - 1 for rooms[mid] = 1
-        return 0
-
-    """
-    left = 0
-    right = len(rooms) - 1
+    right = len(playlist) - 1
 
     while left <= right:
         mid = (left + right) // 2
 
-        if rooms[mid -1] == 0 and rooms[mid] == 1:
-            return len(rooms[mid:])
-        elif rooms[mid] == 0:
+        if playlist[mid] == length:
+            return mid
+        elif playlist[mid] < length:
             left = mid + 1
         else:
             right = mid - 1
-    return 0
-rooms1 = [0, 0, 0, 1, 1, 1, 1]
-rooms2 = [0, 0, 0, 0, 0, 1]
-rooms3 = [0, 0, 0, 0, 0, 0]
-# print(count_checked_in_passengers(rooms1)) 
-# print(count_checked_in_passengers(rooms2))
-# print(count_checked_in_passengers(rooms3))
+    return -1
+# print(find_perfect_song([101, 102, 103, 104, 105], 103))
+# print(find_perfect_song([201, 202, 203, 204, 205], 206))
 
-def is_profitable(excursion_counts):
+def can_attend(tour_dates, available):
+    if not tour_dates:
+        return False
     
-    pass
+    if tour_dates[0] == available:
+        return True
+    else:
+        return can_attend(tour_dates[1:], available)
+# print(can_attend([1, 3, 7, 10, 12], 12))
+# print(can_attend([1, 3, 7, 10, 12], 5))
+
+def my_sqrt(x):
+    left = 0
+    right = x
+
+    if x < 2:
+        return x
+    
+    while left <= right:
+        mid = (left + right) // 2
+        square = mid * mid
+
+        if square == x:
+            return mid
+        elif square < x:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return right 
+# print(my_sqrt(4))
+# print(my_sqrt(8))
+
+def get_group_sum(group_sizes, room_capacity):
+    group_sizes.sort()
+    max_sum = -1
+    n = len(group_sizes)
+
+    for i in range(n-1):
+        left = i + 1
+        right = n - 1
+        best = -1
+        while left <= right:
+            mid = (left+right) // 2
+            total = group_sizes[i] + group_sizes[mid]
+            if total < room_capacity:
+                best = total
+                left = mid + 1
+            else:
+                right = mid - 1
+        if best != -1:
+            max_sum = max(max_sum,best)
+    return max_sum
+# print(get_group_sum([1,20,10,14,3,5,4,2], 12))
+# print(get_group_sum([10,20,30], 15))
+
+def merged_tracks(track1,track2):
+    if not track1:
+        return track2
+    if not track2:
+        return track1
+    
+    if track1[0] < track2[0]:
+        return [track1[0]] + merged_tracks(track1[1:], track2)
+    else:
+        return [track2[0]] + merged_tracks(track1, track2[1:])
+track1 = [1, 3, 5]
+track2 = [2, 4, 6]
+track3 = [10, 20]
+track4 = [15, 30]
+
+print(merged_tracks(track1, track2))
+print(merged_tracks(track3, track4))
