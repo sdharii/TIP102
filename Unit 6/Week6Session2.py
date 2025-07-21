@@ -256,4 +256,4 @@ head_a = Node(2, Node(4, Node(3))) # 342
 head_b = Node(5, Node(6, Node(4))) # 465
 
 print_linked_list(add_two_numbers(head_a, head_b))
-print(7%10)
+
