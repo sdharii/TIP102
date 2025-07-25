@@ -87,5 +87,6 @@ track2 = [2, 4, 6]
 track3 = [10, 20]
 track4 = [15, 30]
 
-print(merged_tracks(track1, track2))
-print(merged_tracks(track3, track4))
+# print(merged_tracks(track1, track2))
+# print(merged_tracks(track3, track4))
+
