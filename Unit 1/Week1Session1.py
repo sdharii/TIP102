@@ -139,7 +139,73 @@ def locate_thistles(items):
             result.append(index)
     return result
 items = ["thistle", "stick", "carrot", "thistle", "eeyore's tail"]
-print(locate_thistles(items))
+# print(locate_thistles(items))
 
 items = ["book", "bouncy ball", "leaf", "red balloon"]
-print(locate_thistles(items))
+# print(locate_thistles(items))
+
+# Advanced Problem Set
+
+def linear_search(lst, target):
+    for index, item in enumerate(lst):
+        if item == target:
+            return index
+    return -1 
+items = ['haycorn', 'haycorn', 'haycorn', 'hunny', 'haycorn']
+target = 'hunny'
+# print(linear_search(items, target))
+
+items = ['bed', 'blue jacket', 'red shirt', 'hunny']
+target = 'red balloon'
+# print(linear_search(items, target))
+
+def final_value_after_operations(operations):
+    tigger = 1
+    for word in operations:
+        if word == "bouncy" or word == "flouncy":
+            tigger += 1
+        elif word == "trouncy" or word == "pouncy":
+            tigger -= 1
+    return tigger
+operations = ["trouncy", "flouncy", "flouncy"]
+# print(final_value_after_operations(operations))
+
+operations = ["bouncy", "bouncy", "flouncy"]
+# print(final_value_after_operations(operations))
+
+def tiggerfy(word):
+    # if substrings are found in string, locate the first index of the substring. splice it to get ahead
+    substrings = ["t","i","gg","er"]
+
+    for substring in substrings:
+        word = word.replace(substring, "")
+    return word
+        
+word = "Trigger"
+# print(tiggerfy(word))
+
+word = "eggplant"
+# print(tiggerfy(word))
+
+word = "Choir"
+# print(tiggerfy(word))
+
+def non_decreasing(nums):
+    count = 0
+    
+    for i in range(len(nums)-1):
+        if nums[i] > nums[i+1]:
+            count += 1
+            if count > 1:
+                return False
+        
+        if i == 0 or nums[i-1] <= nums[i+1]:
+            nums[i] = nums[i + 1]
+        else:
+            nums[i+1] = nums[i]
+    return True
+nums = [4, 2, 3]
+print(non_decreasing(nums))
+
+nums = [4, 2, 1]
+print(non_decreasing(nums))
