@@ -63,25 +63,34 @@ ivy2 = TreeNode("Root", TreeNode("Node1", TreeNode("Leaf1")))
 # print(right_vine(ivy1))
 # print(right_vine(ivy2))
 
-# def right_vine(root): COME BACK TO DO RECURSIVELY
-
-# def count_leaves(root):  COME BACK LATER
-#     current = root
-
-#     if root is None:
-#         return 0
+def right_vine2(root): # This is the same as the prev problem, just done recursively
+    if root.right is None:
+        return [root.val]
     
-#     if current:
-    
-#     if current.left is None and current.right is None:
-#         current = root
-#         return 1 + count_leaves(current.right)
-    
+    right = right_vine(root.right)
+    return [root.val] + right
 
-#     # count = 0
-#     # current = root
+# print(right_vine2(ivy1))
+# print(right_vine2(ivy2))
 
-#     # while current.left:
+
+def count_leaves(root):  
+    if root is None:
+        return 0
+    
+    if root.right is None and root.left is None:
+        return 1 
+    
+    left = count_leaves(root.left)
+    right = count_leaves(root.right)
+
+    return left + right #returns amount of leafs
+oak1 = TreeNode("Root", 
+                TreeNode("Node1", TreeNode("Leaf1")),
+                TreeNode("Node2", TreeNode("Leaf2"), TreeNode("Leaf3")))
+oak2 = TreeNode("Root", TreeNode("Node1", TreeNode("Leaf1")))
+# print(count_leaves(oak1))
+# print(count_leaves(oak2)) 
         
 def survey_tree(root):
     if root is None:
@@ -96,7 +105,37 @@ magnolia = TreeNode("Root",
                 TreeNode("Node1", TreeNode("Leaf1")),
                 TreeNode("Node2", TreeNode("Leaf2"), TreeNode("Leaf3")))
 
-print(survey_tree(magnolia))
-    
-        
+# print(survey_tree(magnolia))
 
+def harvest_berries(root, threshold):
+    if root is None:
+        return 0
+    
+    left = harvest_berries(root.left, threshold)
+    right = harvest_berries(root.right, threshold)
+
+    if root.val > threshold:
+        return root.val + left + right
+    else:
+        return left + right 
+bush = TreeNode(4, TreeNode(10, TreeNode(5), TreeNode(8)), TreeNode(6, None, TreeNode(20)))
+
+# print(harvest_berries(bush, 6))
+# print(harvest_berries(bush, 30))
+
+def find_flower(root, flower):
+    if root is None:
+        return False
+  
+    if root.val == flower:
+        return True
+    
+    return find_flower(root.left, flower) or find_flower(root.right, flower)
+
+
+flower_field = TreeNode("Rose", 
+                        TreeNode("Lily", TreeNode("Orchid"), TreeNode("Lilac")),
+                                TreeNode("Daisy", None, TreeNode("Dahlia")))
+
+print(find_flower(flower_field, "Lilac"))
+print(find_flower(flower_field, "Hibiscus"))
