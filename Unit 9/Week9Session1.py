@@ -127,8 +127,8 @@ def can_fulfill_order(inventory, order_size):
 quantities = [5,4,8,11,None,13,4,7,2,None,None,None,1]
 baked_goods = build_tree(quantities)
 
-print(can_fulfill_order(baked_goods, 22))
-print(can_fulfill_order(baked_goods, 2))
+# print(can_fulfill_order(baked_goods, 22))
+# print(can_fulfill_order(baked_goods, 2))
 
 def zigzag_icing_order(cupcakes):
     if not cupcakes:
